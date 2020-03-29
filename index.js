@@ -40,7 +40,7 @@ module.exports = function(
   )
 
   directoryToUpload = directoryToUpload || DEFAULT_DIRECTORY_NAME
-  const directoryPath = path.resolve(directoryToUpload)
+  const directoryPath = path.resolve(directoryToUpload).replace(/\\/g, '/')
   log.info(`[config] Directory to upload:\n\t ${directoryPath}`)
   return uploadDirectory(
     directoryPath,
