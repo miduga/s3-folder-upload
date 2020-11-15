@@ -66,22 +66,31 @@ s3FolderUpload(directoryName, credentials, options, invalidation)
 
 `Cache-Control` (default: `public, max-age=31536000`) - HTTP header holds directives (instructions) for caching in both requests and responses.
 
+`Content-Encoding` (default: `File Extension Encoding`) - HTTP header holds directives (instructions) for Encoding in both requests and responses.
+
 `Expires` (default: `31536000`) - Header contains the date/time after which the response is considered stale. If there is a Cache-Control header with the max-age or s-maxage directive in the response, the Expires header is ignored.
 
-If you use programatically the library, you could overwrite the `ACL`, `Cache-Control` and `Expires` values to file level.
+If you use programatically the library, you could overwrite the `ACL`, `Cache-Control`,`Content-Encoding` and `Expires` values to file level.
 
 ```javascript
 const options = {
   useFoldersForFileTypes: false,
   useIAMRoleCredentials: false,
-  filesOptions: {
-    'index.html': {
-      'Cache-Control': 'public, max-age=300'
-    }
+}
+
+const invalidation = {
+  awsDistributionId: "<Your CloudFront Distribution Id>",
+  awsInvalidationPath: "<The Path to Invalidate>"
+}
+
+const filesOptions = {
+  'index.html': {
+    'CacheControl': 'public, max-age=300',
+    'ContentEncoding': 'gzip'
   }
 }
 
-s3FolderUpload(directoryName, credentials, options)
+s3FolderUpload(directoryName, credentials, options,invalidation,filesOptions)
 ```
 
 ## CLI
